@@ -11,6 +11,7 @@ const INSERIR_MOVIMENTACAO = `INSERT INTO movimentacoes (tipo, valor, descricao,
 const ATUALIZAR_MOVIMENTACAO = `UPDATE movimentacoes SET tipo = ?, valor = ?, descricao = ?, datacadastro = ? WHERE id = ?;`;
 const LISTAR_MOVIMENTACOES = `SELECT * FROM movimentacoes;`;
 const LISTAR_MOVIMENTACAO_POR_ID = `SELECT * FROM movimentacoes WHERE id = ?;`;
+const EXCLUIR_MOVIMENTACAO = `DELETE FROM movimentacoes WHERE id = ?;`;
 
 export const criacaoTabelaSeNecessario = async function criacaoTabelaSeNecessario(db) {
     const VERSAO_DATABASE = 1;
@@ -39,10 +40,14 @@ export const atualizarMovimentacao = async (db, id, tipo, valor, descricao, data
     await db.runAsync(ATUALIZAR_MOVIMENTACAO, tipo, valor, descricao, datacadastro, id);
 }
 
-export const listarMovimentacoes = async (db) => {
+export const recuperarMovimentacoes = async (db) => {
     return await db.getAllAsync(LISTAR_MOVIMENTACOES);
 }
 
-export const listarMovimentacaoPorId = async (db, id) => {
+export const recuperarMovimentacaoPorId = async (db, id) => {
     return await db.getFirstAsync(LISTAR_MOVIMENTACAO_POR_ID, id);
+}
+
+export const excluirMovimentacao = async (db, id) => {
+    await db.runAsync(EXCLUIR_MOVIMENTACAO, id);
 }

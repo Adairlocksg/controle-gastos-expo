@@ -3,17 +3,19 @@ import { StyleSheet } from "react-native";
 import { List } from "react-native-paper";
 import { NoteContext } from "../App";
 
-function NoteCard({ note, index, navigation }) {
+function MovementCard({ movimentacao, index, navigation }) {
   const { setSelectedNote } = useContext(NoteContext);
 
   return (
     <List.Item
       style={styles.list}
       onPress={() => {
-        setSelectedNote({ note, index });
-        navigation.navigate("Editar movimentação");
+        setSelectedNote({ movimentacao, index });
+        navigation.navigate("Editar movimentação", {
+          id: movimentacao.id,
+        });
       }}
-      title={note}
+      title={movimentacao.descricao}
       right={(props) => <List.Icon {...props} icon="note" />}
     />
   );
@@ -28,4 +30,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NoteCard;
+export default MovementCard;
